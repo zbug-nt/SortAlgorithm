@@ -4,18 +4,31 @@ void Sort::RadixSort(int* arr, int n) //普通基数排序
 {
 	//std::sort(arr, arr + n);
 	
-	int num,max ;          	
+	//借助桶
+	//负数的解决办法是 数组中所有值加上最小值的绝对值转化为正数，排序完成后再减去
+	int num,max,min ;  
 	int* temp = (int*)malloc(sizeof(int)*n);
-	//找出数组中的最大值
+	
+	//找出数组中的最大值和最小值 
 	max = arr[0];
+	min = arr[0];
 	for (int i = 0; i < n; i++)
 	{
 		if (arr[i] > max){
 			max = arr[i];
 		}
-	}			
+		if (arr[i] < min){
+			min = arr[i];
+		}
+	}
+	//转化为正数 
+	for (int i = 0; i < n; i++)
+	{
+		arr[i] = arr[i]+abs(min);
+	}
+				
 	//从个位开始，循环次数为最大数的位数 
-	for(int base=1;max/base >0;base *= 10) 
+	for(int base=1; max/base >0; base *= 10) 
 	{
 		int bucket[10] = {0};     //桶初始值附0
 		//统计桶编号对应的数据个数 
@@ -45,6 +58,11 @@ void Sort::RadixSort(int* arr, int n) //普通基数排序
 		}
 	}
 	free(temp);	
+	
+	//还原原数组
+	for (int i = 0; i < n; i++){
+		arr[i] = arr[i]-abs(min);
+	}	
 	
 }
 
