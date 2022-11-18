@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS //sprintf_s¾ÍÊÇÀÖÉ«
+
 #include "HugeInt.h"
 #include <cstdlib>
 #include <cstring>
@@ -6,7 +8,7 @@
 HugeInt::HugeInt()
 {
 	sig = 1;
-	data = new int[HUGEINT_ARR_SIZE];
+	data = new int[ARR_SIZE];
 	memset(data, 0, sizeof(data));
 	str = NULL;
 }
@@ -25,9 +27,9 @@ HugeInt HugeInt::Rand()
 {
 	HugeInt ret;
 	bool isZero = true;
-	for (int i = 0; i < HUGEINT_ARR_SIZE; ++i)
+	for (int i = 0; i < ARR_SIZE; ++i)
 	{
-		ret.data[i] = ((rand() << 15) | rand()) % (HUGEINT_DATA_MAX + 1);
+		ret.data[i] = ((rand() << 15) | rand()) % BASE;
 		if (ret.data[i] != 0) isZero = false;
 	}
 	ret.sig = isZero ? 1 : rand() & 1;
@@ -36,7 +38,7 @@ HugeInt HugeInt::Rand()
 
 bool HugeInt::absEqualTo(const HugeInt& other) const
 {
-	for (int i = 0; i < HUGEINT_ARR_SIZE; ++i)
+	for (int i = 0; i < ARR_SIZE; ++i)
 	{
 		if (data[i] != other.data[i]) return false;
 	}
@@ -45,7 +47,7 @@ bool HugeInt::absEqualTo(const HugeInt& other) const
 
 bool HugeInt::absLessThan(const HugeInt& other) const
 {
-	for (int i = HUGEINT_ARR_SIZE - 1; i >= 0; --i)
+	for (int i = ARR_SIZE - 1; i >= 0; --i)
 	{
 		if (data[i] < other.data[i]) return true;
 		if (data[i] > other.data[i]) return false;
@@ -96,7 +98,7 @@ int HugeInt::getData(int i) const
 
 void HugeInt::makeString()
 {
-	str = new char[HUGEINT_ARR_SIZE * 5 + 5];
+	str = new char[ARR_SIZE * 5 + 5];
 	char* p = str;
 	if (sig == 0)
 	{
@@ -106,16 +108,16 @@ void HugeInt::makeString()
 	*p = '0';
 	*(p + 1) = '\0';
 	bool first = true;
-	for (int i = HUGEINT_ARR_SIZE - 1; i >= 0; --i)
+	for (int i = ARR_SIZE - 1; i >= 0; --i)
 	{
 		if (!first)
 		{
-			int l = sprintf_s(p, 10, "%05d", data[i]);
+			int l = sprintf(p, "%05d", data[i]);
 			p += l;
 		}
 		else if (data[i] != 0)
 		{
-			int l = sprintf_s(p, 10, "%d", data[i]);
+			int l = sprintf(p, "%d", data[i]);
 			p += l;
 			first = false;
 		}

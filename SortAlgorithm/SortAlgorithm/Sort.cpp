@@ -1,72 +1,93 @@
 #include "Sort.h"
 
+template<typename T>
+struct Node
+{
+	T val;
+	Node<T>* next;
+};
+
 void Sort::RadixSort(int* arr, int n) //普通基数排序
 {
-	//std::sort(arr, arr + n);
-	
-	//借助桶
-	//负数的解决办法是 数组中所有值加上最小值的绝对值转化为正数，排序完成后再减去
-	int num,max,min ;  
-	int* temp = (int*)malloc(sizeof(int)*n);
-	
-	//找出数组中的最大值和最小值 
-	max = arr[0];
-	min = arr[0];
-	for (int i = 0; i < n; i++)
+	static const int BASE = 10;
+
+	int min = arr[0], max = arr[0];
+	for (int i = 1; i < n; ++i)
 	{
-		if (arr[i] > max){
-			max = arr[i];
-		}
-		if (arr[i] < min){
-			min = arr[i];
-		}
+		min = arr[i] < min ? arr[i] : min;
+		max = arr[i] > max ? arr[i] : max;
 	}
-	//转化为正数 
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < n; ++i) arr[i] -= min;
+	max -= min;
+
+	auto head = new Node<int>[BASE + 1];
+	auto tail = new Node<int>*[BASE + 1];
+	auto node = new Node<int>[n + 1];
+	for (int i = 1; i < max; i *= BASE)
 	{
-		arr[i] = arr[i]+abs(min);
-	}
-				
-	//从个位开始，循环次数为最大数的位数 
-	for(int base=1; max/base >0; base *= 10) 
-	{
-		int bucket[10] = {0};     //桶初始值附0
-		//统计桶编号对应的数据个数 
-		for(int i=0;i<n;i++) 
+		memset(head, 0, sizeof(Node<int>) * BASE);
+		memset(tail, 0, sizeof(Node<int>*) * BASE);
+		for (int j = 0; j < n; ++j)
 		{
-			//取个位十位百位...上的数字,也是桶编号 
-			num = arr[i]/base%10;
-			bucket[num]++;		
-		}	
-		//累加,最后桶的值代表数据排第几 
-		for(int i=1;i<10;i++){
-			bucket[i]=bucket[i-1]+bucket[i];
-		}	
-		//从后往前放到临时数组
-		for(int i=n-1;i>=0;i--)
+			int t = arr[j] / i % BASE;
+			node[j] = {arr[j], NULL};
+			if (head[t].next == NULL) head[t].next = &node[j];
+			if (tail[t] != NULL) tail[t]->next = &node[j];
+			tail[t] = &node[j];
+		}
+		int p = 0;
+		for (int j = 0; j < BASE; ++j)
 		{
-			int k ;                 
-			num = arr[i]/base%10;
-			//数据放的位置，即临时数组下标 
-			k = bucket[num]-1;        
-			temp[k] = arr[i];
-			bucket[num]--;	
-		} 	
-	    //把第一遍排序结果拷贝回原数组 
-		for (int i = 0; i < n; i++){
-			arr[i] = temp[i];
+			auto t = &head[j];
+			while (t = t->next)
+			{
+				arr[p++] = t->val;
+			}
+			head[j].next = NULL;
+			tail[j] = NULL;
 		}
 	}
-	free(temp);	
-	
-	//还原原数组
-	for (int i = 0; i < n; i++){
-		arr[i] = arr[i]-abs(min);
-	}	
-	
+	delete[] head;
+	delete[] tail;
+	delete[] node;
+
+	for (int i = 0; i < n; ++i) arr[i] += min;
 }
 
 void Sort::RadixSort(HugeInt* arr, int n) //大数基数排序
 {
 	std::sort(arr, arr + n);
+
+	static const int RANGE = HugeInt::BASE << 1;
+
+	auto head = new Node<HugeInt>[RANGE + 1];
+	auto tail = new Node<HugeInt>*[RANGE + 1];
+	auto node = new Node<HugeInt>[n + 1];
+	for (int i = 0; i < HugeInt::ARR_SIZE; ++i)
+	{
+		memset(head, 0, sizeof(Node<HugeInt>) * RANGE);
+		memset(tail, 0, sizeof(Node<HugeInt>*) * RANGE);
+		for (int j = 0; j < n; ++j)
+		{
+			int t = arr[j].getData(i) + HugeInt::BASE;
+			*(node + j) = { arr[j], NULL };
+			if (head[t].next == NULL) head[t].next = &node[j];
+			if (tail[t] != NULL) tail[t]->next = &node[j];
+			tail[t] = &node[j];
+		}
+		int p = 0;
+		for (int j = 0; j < RANGE; ++j)
+		{
+			auto t = &head[j];
+			while (t = t->next)
+			{
+				arr[p++] = t->val;
+			}
+			head[j].next = NULL;
+			tail[j] = NULL;
+		}
+	}
+	delete[] head;
+	delete[] tail;
+	delete[] node;
 }

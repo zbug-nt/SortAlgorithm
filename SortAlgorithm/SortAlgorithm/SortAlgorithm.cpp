@@ -60,6 +60,8 @@ int main(int argc, char* argv[])
         {
             dataProvider->data(arr);
             multiThreadSort(sortAlgorithm[i], arr, n, thread);
+            /*for (int j = 0; j < n; ++j) printf("%s ", arr[j].toString());
+            puts("");*/
         }
         delete[] arr;
     }

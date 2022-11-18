@@ -3,8 +3,8 @@
 class HugeInt
 {
 public:
-	static const int HUGEINT_ARR_SIZE = 20;
-	static const int HUGEINT_DATA_MAX = 99999;
+	static const int ARR_SIZE = 20;
+	static const int BASE = 100000;
 
 	static HugeInt Zero();
 	static HugeInt Rand();

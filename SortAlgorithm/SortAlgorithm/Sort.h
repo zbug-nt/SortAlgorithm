@@ -2,9 +2,6 @@
 
 #include <algorithm>
 #include "HugeInt.h"
-//#include<stdio.h>
-//#include<stdlib.h>
-
 
 namespace Sort
 {
@@ -50,7 +47,7 @@ namespace Sort
 	void QuickSort(T* arr, int n)                 //快速排序入口
 	{
 		if (n <= 1) return;
-		int t = (rand() << 16) | rand();
+		int t = (rand() << 15) | rand();
 		t %= n;
 		std::swap(arr[0], arr[t]);
 		int p = 1, q = n; //pq指向最后一个小于等于arr[0]的后一个
