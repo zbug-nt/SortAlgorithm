@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
     if (isHuge)
     {
         auto dataProvider = HugeIntDataProvider::Random(n);
-        auto arr = new HugeInt[n];
+        auto arr = new HugeInt[n + 1];
         for (int i = 0; i < ALGORITHM_COUNT; ++i)
         {
             dataProvider->data(arr);
@@ -66,8 +66,8 @@ int main(int argc, char* argv[])
     else
     {
         auto dataProvider = IntDataProvider::Random(n);
-        auto arr = new int[n];
-        for (int i = 0; i < 3; ++i)
+        auto arr = new int[n + 1];
+        for (int i = 0; i < ALGORITHM_COUNT; ++i)
         {
             dataProvider->data(arr);
             multiThreadSort(sortAlgorithm[i], arr, n);
