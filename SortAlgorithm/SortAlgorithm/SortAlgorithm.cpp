@@ -21,7 +21,7 @@ void multiThreadSort(SortBase* algortihm, T* arr, int n, int thread = 1)
     {
         //多线程
     }
-    printf("排序完成，用时%.3lfs，验证正确性...\n", double(clock() - t) / CLOCKS_PER_SEC);
+    printf("排序完成，用时 %dms ，验证正确性...\n", (clock() - t) * 1000 / CLOCKS_PER_SEC);
     for (int i = 1; i < n; ++i)
     {
         if (arr[i - 1] > arr[i])
