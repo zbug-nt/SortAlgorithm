@@ -25,7 +25,7 @@ public:
 	const char* toString();
 
 private:
-	int sig; //1: ·Ç¸ºÊı  0: ¸ºÊı
+	int sig; //1: éè´Ÿæ•°  0: è´Ÿæ•°
 	int* data;
 	char* str;
 

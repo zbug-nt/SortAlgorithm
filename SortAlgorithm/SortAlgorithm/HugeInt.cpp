@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS //sprintf_s¾ÍÊÇÀÖÉ«
+#define _CRT_SECURE_NO_WARNINGS //sprintf_så°±æ˜¯ä¹è‰²
 
 #include "HugeInt.h"
 #include <cstdlib>
