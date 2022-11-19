@@ -1,6 +1,7 @@
 package distributed;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -24,10 +25,6 @@ public class DateOperator {
         return array;
     }
 
-    /**
-     * 合并结果并输出到文件
-     * @param data
-     */
     public static void mergeAndWriteToFile(List<int[]> data) {
         List<Integer> indexList = new ArrayList<>();
         data.forEach(i -> indexList.add(0));

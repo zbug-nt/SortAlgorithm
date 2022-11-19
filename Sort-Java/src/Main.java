@@ -1,10 +1,11 @@
 import basic.*;
-import com.sun.scenario.effect.Merge;
 import distributed.DistributedSort;
 
 public class Main {
 
     public static void main(String[] args) {
+
+
         int[] array1 = {45, 65, 12, 132, 98, 9, 78, 100};
         int[] array2 = {45, 65, 12, 132, 98, 9, 78, 100};
         int[] array3 = {45, 65, 12, 132, 98, 9, 78, 100};
@@ -39,7 +40,8 @@ public class Main {
         }
 
         // 分布式排序
-//        DistributedSort.sort();
+        DistributedSort.sort();
+
 
     }
 }

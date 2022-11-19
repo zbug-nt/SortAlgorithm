@@ -17,7 +17,6 @@ public class DistributedSort {
         }
 
         CountDownLatch latch = new CountDownLatch(threadNum);
-        // 分线程进行排序
         for (int[] ints : arrayList) {
             new Thread(new Runnable() {
                 @Override
