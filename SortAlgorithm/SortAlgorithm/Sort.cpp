@@ -9,7 +9,7 @@ struct Node
 
 void Sort::RadixSort(int* arr, int n) //普通基数排序
 {
-	static const int BASE = 10;
+	static const int BASE = 1024;
 
 	int min = arr[0], max = arr[0];
 	for (int i = 1; i < n; ++i)

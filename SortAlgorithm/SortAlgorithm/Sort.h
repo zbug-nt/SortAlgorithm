@@ -54,7 +54,7 @@ namespace Sort
 		while (p < q)
 		{
 			while (p < q && arr[p] <= arr[0]) ++p;
-			while (p < q && arr[q] > arr[0]) --q;
+			while (q == n || (p < q && arr[q] > arr[0])) --q;
 			if (p < q) std::swap(arr[p], arr[q]);
 		}
 		std::swap(arr[0], arr[p - 1]);
