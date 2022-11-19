@@ -50,3 +50,10 @@ SortAlgorithm/SortAlgorithm.sdf
 SortAlgorithm/SortAlgorithm.v12.suo
 SortAlgorithm/SortAlgorithm/x64/Debug/SortAlgorithm.vcxproj.FileListAbsolute.txt
 SortAlgorithm/SortAlgorithm/x64/Debug/SortAlgorithm.Build.CppClean.log
+SortAlgorithm/x64/Debug/选择排序.txt
+SortAlgorithm/x64/Debug/快速排序.txt
+SortAlgorithm/x64/Debug/归并排序.txt
+SortAlgorithm/x64/Debug/希尔排序.txt
+SortAlgorithm/x64/Debug/基数排序.txt
+SortAlgorithm/x64/Debug/std;;sort.txt
+SortAlgorithm/.vs/SortAlgorithm/v17/ipch/AutoPCH/87fac006c401949a/HEAP.ipch

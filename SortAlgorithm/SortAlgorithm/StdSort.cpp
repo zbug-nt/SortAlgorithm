@@ -3,7 +3,7 @@
 
 const char* StdSort::name() const
 {
-	return "std::sort";
+	return "std;;sort";
 }
 
 void StdSort::sort(int* arr, int n) const
