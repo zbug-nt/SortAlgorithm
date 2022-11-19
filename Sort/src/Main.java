@@ -1,5 +1,6 @@
 import basic.*;
 import com.sun.scenario.effect.Merge;
+import distributed.DistributedSort;
 
 public class Main {
 
@@ -37,6 +38,8 @@ public class Main {
             System.out.print(i+", ");
         }
 
+        // 分布式排序
+//        DistributedSort.sort();
 
     }
 }
