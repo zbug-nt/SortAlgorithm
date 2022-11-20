@@ -18,7 +18,6 @@ SortAlgorithm/.vs/SortAlgorithm/v17/ipch/AutoPCH/aca50c0cd0514cb5/QUICKSORT.ipch
 SortAlgorithm/.vs/SortAlgorithm/v17/ipch/AutoPCH/b100abfcbcd0570c/DATAPROVIDERBASE.ipch
 SortAlgorithm/.vs/SortAlgorithm/v17/ipch/AutoPCH/c96420adb51ef1e2/HUGEINT.ipch
 SortAlgorithm/.vs/SortAlgorithm/v17/ipch/AutoPCH/cf6ab087b9a88e43/STDSORT.ipch
-SortAlgorithm/SortAlgorithm/SortAlgorithm.vcxproj.filters
 SortAlgorithm/SortAlgorithm/SortAlgorithm.vcxproj.user
 SortAlgorithm/SortAlgorithm/x64/Debug/HugeInt.obj
 SortAlgorithm/SortAlgorithm/x64/Debug/HugeIntDataProvider.obj
