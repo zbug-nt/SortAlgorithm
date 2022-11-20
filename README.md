@@ -1,17 +1,24 @@
 
 # SortAlgorithm-程序设计与算法大作业
 ## 使用说明
-1.选择参加排序的算法(默认选择排序不参与)    
-&emsp;选择排序代号1，归并排序代号2，快速排序代号3，归并排序代号4，基数排序代号5。     
-&emsp;-a <选择的算法>    &emsp; // 写相应的算法代号    
+1.选择参加排序的算法(默认选择排序不参与)         
+&emsp;-a <选择的算法>    &emsp; // 写相应的算法代号：选择排序代号1，归并排序代号2，快速排序代号3，归并排序代号4，基数排序代号5       
+&emsp;例如全部算法参与排序：      
+![d6310e8f39b2a0e24a53d9294585663](https://user-images.githubusercontent.com/117704533/202892497-d686bfbe-c16f-4dd9-afc3-1f8f01c73572.png)
 
 2.数组操作    
-（1）选择数组长度（默认1000）   
-&emsp;&emsp;&emsp;-n <数组长度>    &emsp;//n后面写数组长度    
+（1）选择数组长度（默认10000）   
+&emsp;&emsp;&emsp;-n <数组长度>    &emsp;//n后面写数组长度     
+&emsp;例如数组长度为100000：     
+![image](https://user-images.githubusercontent.com/117704533/202892647-ac3d1fc4-7a54-4aff-958b-482b7b3315e5.png)
+
 （2）选择初始数组状态（默认乱序）    
-&emsp;&emsp;&emsp;-d r&emsp; //乱序       
-&emsp;&emsp;&emsp;-d a&emsp; //升序      
-&emsp;&emsp;&emsp;-d d &emsp;//降序    
+&emsp;&emsp;&emsp;-d r   &emsp; //乱序       
+&emsp;&emsp;&emsp;-d a   &emsp; //升序      
+&emsp;&emsp;&emsp;-d d   &emsp;//降序       
+&emsp;例如选数组初始状态为升序：    
+![image](https://user-images.githubusercontent.com/117704533/202892706-a117d66c-4b25-4415-a095-26d4357fa08b.png)
+
 
 3.大数版本   
 &emsp;-h   &emsp;  //启用大数    
