@@ -32,7 +32,7 @@
 
 <br /><br />
 ## 常规版本 
-### 一、实现这五种排序并分析  
+### 一、实现这五种排序并分析        
 #### 1. 选择排序   
 基本思想                              
 &emsp;&emsp;每一趟排序待排序序列中选出最小的元素，(先假设第一个元素是最小的，遍历后面的元素，不断记录更小的元素下标，即可得到一趟遍历中最小元素)然后与该未排序序列的第一个元素交换位置，确定该元素的位置，如此重复直到所有元素排序完成。  
@@ -40,9 +40,21 @@
   时间复杂度     
  &emsp;&emsp; 一趟排序的比较次数是0(n)，重复n-1趟，所以时间复杂度是0(n^2)。
 
-主要代码        
-![在这里插入图片描述](https://img-blog.csdnimg.cn/708f1c1ec72b4e289aa35e0775810ce9.png)
-
+主要代码       
+```c++
+	template<typename T>
+	void SelectSort(T* arr, int n)                //选择排序入口
+	{
+		for (int i = 0; i < n; ++i)
+		{
+			for (int j = i + 1; j < n; ++j)
+			{
+				if (arr[j] < arr[i])
+					std::swap(arr[i], arr[j]);
+			}
+	    }
+	}
+```
 <br /><br />
 
 
@@ -54,8 +66,27 @@
  时间复杂度  
 &emsp;&emsp; 归并排序的时间复杂度为归并的趟数与每一趟归并的时间的复杂度的乘积。子算法merge合并的时间复杂度为0(n),趟数为log₂n ,故算法复杂度为0(nlogn)。
 
-主要代码       
-![在这里插入图片描述](https://img-blog.csdnimg.cn/73476f23fccf474397814540cea9ab4d.png)
+主要代码          
+```c++
+	template<typename T>
+	void MergeSort(T* arr, int n)                 //归并排序入口
+	{
+		if (n <= 1) return;
+		int mid = n / 2;
+		MergeSort(arr, mid); // [0, mid - 1]
+		MergeSort(arr + mid, n - mid); // [mid, n - 1]
+		T* temp = new T[n + 1];
+		int p = 0, q = mid;
+		for (int i = 0; i < n; ++i)
+		{
+			if (p >= mid) temp[i] = arr[q++];
+			else if (q >= n) temp[i] = arr[p++];
+			else temp[i] = arr[q] < arr[p] ? arr[q++] : arr[p++];
+		}
+		memcpy(arr, temp, n * sizeof(T));
+		delete[] temp;
+	}
+```
 <br /><br />
 
 
@@ -67,9 +98,27 @@
 &emsp;&emsp; 快排一趟排序确定一个元素的位置，时间复杂度为O(n)，在平均情况下递归趟数为log₂n ，算法复杂度为0(nlogn)。在序列已经有序的情况下，需要重复n-1趟才能确定所有元素的位置，时间复杂度为0(n^2)。
 
 
-主要代码    
-![在这里插入图片描述](https://img-blog.csdnimg.cn/065e73346bc648a7bde94af7a34bed3e.png)
-
+主要代码       
+```c++
+	template<typename T>
+	void QuickSort(T* arr, int n)                 //快速排序入口
+	{
+		if (n <= 1) return;
+		int t = (rand() << 15) | rand();
+		t %= n;
+		std::swap(arr[0], arr[t]);
+		int p = 1, q = n; //pq指向最后一个小于等于arr[0]的后一个
+		while (p < q)
+		{
+			while (p < q && arr[p] <= arr[0]) ++p;
+			while (q == n || (p < q && arr[q] > arr[0])) --q;
+			if (p < q) std::swap(arr[p], arr[q]);
+		}
+		std::swap(arr[0], arr[p - 1]);
+		QuickSort(arr, p - 1);
+		QuickSort(arr + p, n - p);
+	}
+```
 <br /><br />
 
 
@@ -81,10 +130,32 @@
 时间复杂度     
 &emsp;&emsp;希尔排序的排序趟数为log₂n；当子序列分的越多时，子序列内的元素就越少，元素比较交换次数就越少，而当子序列的个数减少时，整个序列接近有序，子序列的元素虽然变多但元素之间的比较交换次数没有随之变多。所以一般情况下，认为希尔排序的时间复杂度在0(nlogn)与0(n^2)之间。
 
-主要代码     
-![在这里插入图片描述](https://img-blog.csdnimg.cn/e172c89a0c8f4e7185c6355711631e02.png)
+主要代码         
+```c++
+	template<typename T>
+	void ShellSort(T* arr, int n)                //希尔排序入口
+	{
+		int gap, i, j, flag;
+	    //外循环以不同的gap值对形成的序列进行排序，直到gap=1 
+	    for(gap = n / 2; gap >= 1; gap = gap / 2)
+		{
+			//对各个子序列进行冒泡排序 
+			do{
+				flag = 0; 
+				for(i = 0; i < n - gap; i++)
+				{
+					j = i + gap;
+					if(arr[i] > arr[j])
+					{
+						std::swap(arr[i], arr[j]);
+						flag = 1;
+					}	
+				}		
+			} while (flag);
+	    }	
+	}
+```
 <br /><br />
-
 #### 5. 基数排序   
 基本思想       
 &emsp;&emsp;把参加排序的序列中的的元素按第1位的值进行排序（最右边一位为第1位)，然后再按第2位的值进行排序......最后按第d位的值进行排序。每一趟排序过程中若有元素的位值相同，则它们之间仍保留前一趟排序的次序。    
@@ -93,15 +164,61 @@
  时间复杂度          
  &emsp;&emsp;基数排序的趟数是d趟，每趟要把n个元素依次分配到r个分队，再集合到总队，每趟花费的时间为0(n+r）。所以基数排序总的时间复杂度为0(d(n+r))。
      
- 主要代码    
- ![](https://img-blog.csdnimg.cn/27ad8a2271fc4b439a09e0e07bd7d2aa.png)
+ 主要代码     
+```c++
+void Sort::RadixSort(int* arr, int n) //普通基数排序
+{
+	static const int BASE = 1500;
 
+	int min = arr[0], max = arr[0];
+	for (int i = 1; i < n; ++i)
+	{
+		min = arr[i] < min ? arr[i] : min;
+		max = arr[i] > max ? arr[i] : max;
+	}
+	for (int i = 0; i < n; ++i) arr[i] -= min;
+	max -= min;
+
+	auto head = new Node<int>[BASE + 1];
+	auto tail = new Node<int>*[BASE + 1];
+	auto node = new Node<int>[n + 1];
+	for (int i = 1; i < max; i *= BASE)
+	{
+		memset(head, 0, sizeof(Node<int>) * BASE);
+		memset(tail, 0, sizeof(Node<int>*) * BASE);
+		for (int j = 0; j < n; ++j)
+		{
+			int t = arr[j] / i % BASE;
+			node[j] = {arr[j], NULL};
+			if (head[t].next == NULL) head[t].next = &node[j];
+			if (tail[t] != NULL) tail[t]->next = &node[j];
+			tail[t] = &node[j];
+		}
+		int p = 0;
+		for (int j = 0; j < BASE; ++j)
+		{
+			auto t = &head[j];
+			while (t = t->next)
+			{
+				arr[p++] = t->val;
+			}
+			head[j].next = NULL;
+			tail[j] = NULL;
+		}
+	}
+	delete[] head;
+	delete[] tail;
+	delete[] node;
+
+	for (int i = 0; i < n; ++i) arr[i] += min;
+}
+```
   <br /><br /><br />
 
   
 
 ### 二、分析其在不同规模的输入下单机性能变化情况      
-#### 1.  原始数组次序对排序性能影响    
+#### 1.  初始数组次序对排序性能影响    
  &emsp;&emsp; 分析五种排序算法在初始数组次序分别为乱序，升序，降序情况下的性能变化情况 ，这里固定数组长度为100000。      
  <br />
 
@@ -137,7 +254,7 @@
 | 快速排序 | 0 | 2 |27| 283 |
 | 希尔排序 | 0| 8 | 134 | 2264 |
 | 基数排序 | 0 | 0 | 9 | 147 |
-|<br />|||||
+<br />
 
 性能分析        
 &emsp;&emsp;从实验结果来看，这五种排序耗时从小到大为：基数排序<归并排序和快速排序（一个数量级）<希尔排序<选择排序   
@@ -159,7 +276,7 @@
 
 
 
-## 大数排序
+## 大数版本
 
 #### 大数排序实现
 
@@ -172,9 +289,9 @@ class Sort;
 
 #### 大数的存储方式
 
-以10000为基准，使用int[20]的数组存储一个大数，每一个int存储0~9999的一个数，高位数字表示成10000的n次进位，这样仅仅使用长度为20的int数组即可表示10的100次方这样大的数字。
+ &emsp;&emsp; 以10000为基准，使用int[20]的数组存储一个大数，每一个int存储0~9999的一个数，高位数字表示成10000的n次进位，这样仅仅使用长度为20的int数组即可表示10的100次方这样大的数字。
 
-自定义数据类型，实现其比较方法，此处例举大数对象的定义：
+ &emsp;&emsp; 自定义数据类型，实现其比较方法，此处例举大数对象的定义：
 
 ```c++
 class HugeInt
@@ -243,11 +360,11 @@ class SortAlgorithm;
 
 #### 分布式排序算法分析
 
-对于小规模数据量的数据进行排序和运算，其需要的内存容量，核心性能，和运算时间；单机的性能就可以满足。
+ &emsp;&emsp; 对于小规模数据量的数据进行排序和运算，其需要的内存容量，核心性能，和运算时间；单机的性能就可以满足。
 
-对于超大规模量的数据进行排序和运算，往往单机的性能无法满足其需要；需要多台机器分别对数据的某一部分进行排序，最后进行数据的合并排序来完成大体量数据的排序运算。
+ &emsp;&emsp; 对于超大规模量的数据进行排序和运算，往往单机的性能无法满足其需要；需要多台机器分别对数据的某一部分进行排序，最后进行数据的合并排序来完成大体量数据的排序运算。
 
-真实环境中的分布式运算即将任务进行切片，分发给不同的核心进行计算；可以在单机中使用多线程来模拟分布式排序运算；最终都需要将多个线程运算的结果进行汇总排序。
+ &emsp;&emsp; 真实环境中的分布式运算即将任务进行切片，分发给不同的核心进行计算；可以在单机中使用多线程来模拟分布式排序运算；最终都需要将多个线程运算的结果进行汇总排序。
 
 #### 分布式算法耗时
 
